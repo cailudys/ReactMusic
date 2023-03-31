@@ -5,8 +5,8 @@ interface Iprops {
   children?: ReactNode
 }
 
-const Download: FC<Iprops> = () => {
-  return <>Download</>
+const Template: FC<Iprops> = () => {
+  return <>Template</>
 }
 
-export default memo(Download)
+export default memo(Template)
