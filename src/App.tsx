@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useRoutes, Link } from 'react-router-dom'
 import routes from './router'
 
@@ -11,7 +11,9 @@ function App() {
         <Link to="/focus">关注</Link>
         <Link to="/download">下载客户端</Link>
       </div>
-      <div className="main"> {useRoutes(routes)}</div>
+      <Suspense fallback="">
+        <div className="main"> {useRoutes(routes)}</div>
+      </Suspense>
     </div>
   )
 }
