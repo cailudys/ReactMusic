@@ -1,5 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { useSelector, TypedUseSelectorHook, useDispatch } from 'react-redux'
+import {
+  useSelector,
+  TypedUseSelectorHook,
+  useDispatch,
+  shallowEqual
+} from 'react-redux'
 
 import counterReducer from './modules/counter'
 
@@ -15,5 +20,6 @@ type DispatchType = typeof store.dispatch
 
 export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector
 export const useAppDispatch: () => DispatchType = useDispatch
+export const shallEqualApp = shallowEqual
 
 export default store

@@ -13,4 +13,5 @@ const counterSlice = createSlice({
   }
 })
 
+export const { changeMessage } = counterSlice.actions
 export default counterSlice.reducer
