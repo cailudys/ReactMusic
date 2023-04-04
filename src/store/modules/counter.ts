@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface IState {
   count: number
@@ -14,7 +14,7 @@ const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    changeMessage(state, { payload }) {
+    changeMessage(state, { payload }: PayloadAction<string>) {
       state.message = payload
     }
   }
