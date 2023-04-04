@@ -1,5 +1,5 @@
 // 1.手动切换
-export const BASE_URL = 'http://codercba.com:9002'
+// export const BASE_URL = 'http://codercba.com:9002'
 // export const BASE_URL = 'http://codercba.prod:9002'
 export const TIME_OUT = 10000
 
@@ -16,3 +16,4 @@ export const TIME_OUT = 10000
 
 // 3.从定义的环境变量的配置文件中, 加载变量
 // console.log(process.env.REACT_APP_BASE_URL)
+// export const BASE_URL = process.env.REACT_APP_BASE_URL
