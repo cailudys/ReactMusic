@@ -30,7 +30,13 @@ const AppHeader: FC<Iprops> = () => {
             网页云音乐
           </a>
           <div className="title-list">
-            {headerTitles.map((item) => showItem(item))}
+            {headerTitles.map((item) => {
+              return (
+                <div className="item" key={item.title}>
+                  {showItem(item)}
+                </div>
+              )
+            })}
           </div>
         </HeaderLeft>
         <HeaderRight>headerright</HeaderRight>

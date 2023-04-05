@@ -28,8 +28,9 @@ export const HeaderLeft = styled.div`
     text-indent: -9999px;
   }
 
-        display: flex;
-      line-height: 70px;
+  .title-list {
+    display: flex;
+    line-height: 70px;
 
     .item {
       position: relative;
@@ -40,8 +41,10 @@ export const HeaderLeft = styled.div`
         color: #ccc;
       }
 
+      // 伪类是用于匹配元素在特定状态下的选择器。
       :last-of-type a {
         position: relative;
+        // 伪元素在元素内容后插入虚拟元素。这些虚拟元素可以用来创建一些特殊效果，比如添加装饰线条、图标等等。
         ::after {
           position: absolute;
           content: '';
@@ -54,6 +57,12 @@ export const HeaderLeft = styled.div`
         }
       }
 
+      /**
+      *  这段 CSS 代码包含两个选择器，它们共享相同的样式规则。
+      *  在CSS中，逗号可以用来将多个选择器组合在一起，从而对多个选择器应用相同的样式规则。
+      *  &:hover a：这个选择器表示当某个元素被悬停时，该元素内部的所有 a（锚点）元素应用指定的样式。
+      *  .active：这个选择器表示具有 .active 类的元素将应用指定的样式。
+      */
       &:hover a,
       .active {
         color: #fff;
