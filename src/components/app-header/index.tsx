@@ -10,6 +10,18 @@ interface Iprops {
 }
 
 const AppHeader: FC<Iprops> = () => {
+  const showItem = (item: any) => {
+    if (item.type === 'path') {
+      return <Link to={item.link}>{item.title}</Link>
+    } else {
+      return (
+        <a href={item.link} rel="noreferrer" target="_blank">
+          {item.title}
+        </a>
+      )
+    }
+  }
+
   return (
     <HeaderWrapper>
       <div className="content wrap-v1">
@@ -17,7 +29,9 @@ const AppHeader: FC<Iprops> = () => {
           <a className="logo sprite_01" href="/">
             网页云音乐
           </a>
-          <div className="title-list"></div>
+          <div className="title-list">
+            {headerTitles.map((item) => showItem(item))}
+          </div>
         </HeaderLeft>
         <HeaderRight>headerright</HeaderRight>
       </div>

@@ -28,9 +28,8 @@ export const HeaderLeft = styled.div`
     text-indent: -9999px;
   }
 
-  .title-list {
-    display: flex;
-    line-height: 70px;
+        display: flex;
+      line-height: 70px;
 
     .item {
       position: relative;

@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react'
-import { useRoutes, Link } from 'react-router-dom'
-import AppHeader from './components/app-header'
+import { useRoutes } from 'react-router-dom'
 
 import routes from './router'
 import { useAppSelector, useAppDispatch, shallEqualApp } from './store'
 import { changeMessage } from './store/modules/counter'
-import Demo2 from './views/demo/demo02'
+import AppHeader from './components/app-header'
+import AppFooter from './components/app-footer'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -26,12 +26,13 @@ function App() {
   return (
     <div className="App">
       <AppHeader></AppHeader>
-      <h2>当前计数：{count}</h2>
+      {/* <h2>当前计数：{count}</h2>
       <h2>当前消息：{message}</h2>
-      <button onClick={handleMessageChange}>修改message</button>
+      <button onClick={handleMessageChange}>修改message</button> */}
       <Suspense fallback="">
         <div className="main"> {useRoutes(routes)}</div>
       </Suspense>
+      <AppFooter></AppFooter>
     </div>
   )
 }
