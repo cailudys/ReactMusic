@@ -1,24 +1,27 @@
 import React, { memo, useEffect, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import hyRequest from '@/service'
+import { useAppDispatch } from '@/store'
+import { fetchBannerDatatAction } from './store/recommend'
+import TopBanner from './c-cpns/top-banner'
 
 interface Iprops {
   children?: ReactNode
 }
 
 const Recommend: FC<Iprops> = () => {
-  const [banners, setBanners] = useState<any[]>([])
+  const dispatch = useAppDispatch()
 
-  // 测试网络请求
+  // 发起action获取数据
   useEffect(() => {
-    hyRequest
-      .get({
-        url: '/banner'
-      })
-      .then((res) => console.log(res))
+    dispatch(fetchBannerDatatAction())
   }, [])
 
-  return <>Recommend</>
+  return (
+    <>
+      <TopBanner></TopBanner>
+      recommend
+    </>
+  )
 }
 
 export default memo(Recommend)
