@@ -43,11 +43,13 @@ export const HeaderLeft = styled.div`
 
       // 伪类是用于匹配元素在特定状态下的选择器。
       :last-of-type a {
+        // 子绝父相，可以使得子元素能相对于父元素来进行绝对定位。
         position: relative;
         // 伪元素在元素内容后插入虚拟元素。这些虚拟元素可以用来创建一些特殊效果，比如添加装饰线条、图标等等。
         ::after {
           position: absolute;
           content: '';
+          // 通过width，height，background-image和background-position这四个属性，从sprint图上确定所需的图片和设置显示图片的区域大小
           width: 28px;
           height: 19px;
           background-image: url(${require('@/assets/img/sprite_01.png')});

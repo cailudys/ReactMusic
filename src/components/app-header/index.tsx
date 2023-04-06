@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { HeaderLeft, HeaderRight, HeaderWrapper } from './style'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import headerTitles from '@/assets/data/header_titles.json'
 
@@ -12,7 +12,12 @@ interface Iprops {
 const AppHeader: FC<Iprops> = () => {
   const showItem = (item: any) => {
     if (item.type === 'path') {
-      return <Link to={item.link}>{item.title}</Link>
+      return (
+        <NavLink to={item.link}>
+          {item.title}
+          <i className="icon sprite_01"></i>
+        </NavLink>
+      )
     } else {
       return (
         <a href={item.link} rel="noreferrer" target="_blank">
