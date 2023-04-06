@@ -46,6 +46,7 @@ const AppHeader: FC<Iprops> = () => {
         </HeaderLeft>
         <HeaderRight>headerright</HeaderRight>
       </div>
+      <div className="divider"></div>
     </HeaderWrapper>
   )
 }
