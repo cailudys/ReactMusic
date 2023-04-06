@@ -1,10 +1,21 @@
 import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
-import { BannerWrapper } from './styled'
+import { Carousel } from 'antd'
+
+import { BannerControl, BannerLeft, BannerRight, BannerWrapper } from './styled'
 import { shallEqualApp, useAppSelector } from '@/store'
 
 interface Iprops {
   children?: ReactNode
+}
+
+const contentStyle: React.CSSProperties = {
+  margin: 0,
+  height: '160px',
+  color: '#fff',
+  lineHeight: '160px',
+  textAlign: 'center',
+  background: '#364d79'
 }
 
 const TopBanner: FC<Iprops> = () => {
@@ -18,9 +29,28 @@ const TopBanner: FC<Iprops> = () => {
 
   return (
     <BannerWrapper>
-      {banners.map((item) => {
-        return <div key={item.imageUrl}>{item.imageUrl}</div>
-      })}
+      <div className="banner wrap-v2">
+        <BannerLeft>
+          <Carousel autoplay>
+            {banners.map((item) => {
+              return (
+                <div key={item.url} className="banner-item">
+                  <img
+                    className="image"
+                    src={item.imageUrl}
+                    alt={item.typeTitle}
+                  ></img>
+                </div>
+              )
+            })}
+          </Carousel>
+        </BannerLeft>
+        <BannerRight></BannerRight>
+        <BannerControl>
+          <button className="btn left"></button>
+          <button className="btn right"></button>
+        </BannerControl>
+      </div>
     </BannerWrapper>
   )
 }
