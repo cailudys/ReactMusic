@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { memo, useRef, useState } from 'react'
 import type { FC, ReactNode, ElementRef } from 'react'
 import { Carousel } from 'antd'
 
@@ -19,6 +19,7 @@ const contentStyle: React.CSSProperties = {
 }
 
 const TopBanner: FC<Iprops> = () => {
+  const [currentIndex, setCurrentIndex] = useState(0)
   // 创建一个ref，传递给需要控制的组件
   const bannerRef = useRef<ElementRef<typeof Carousel>>(null)
 
@@ -38,11 +39,31 @@ const TopBanner: FC<Iprops> = () => {
     bannerRef.current?.next()
   }
 
+  function handleAfterChange(current: number) {
+    setCurrentIndex(current)
+  }
+
+  let bgImageUrl = banners[currentIndex]?.imageUrl
+  if (currentIndex >= 0 && banners.length > 0) {
+    bgImageUrl = banners[currentIndex].imageUrl + '?imageView&blur=40x20'
+  }
+
+  console.log('bgImageUrl', bgImageUrl)
+
   return (
-    <BannerWrapper>
+    <BannerWrapper
+      style={{
+        background: `url('${bgImageUrl}') center center / 6000px`
+      }}
+    >
       <div className="banner wrap-v2">
         <BannerLeft>
-          <Carousel autoplay ref={bannerRef}>
+          <Carousel
+            effect="fade"
+            autoplay
+            ref={bannerRef}
+            afterChange={handleAfterChange}
+          >
             {banners.map((item) => {
               return (
                 <div key={item.url} className="banner-item">
