@@ -26,6 +26,13 @@ const AppHeader: FC<Iprops> = () => {
       )
     }
   }
+  const TitleListArr = headerTitles.map((item) => {
+    return (
+      <div className="item" key={item.title}>
+        {showItem(item)}
+      </div>
+    )
+  })
 
   return (
     <HeaderWrapper>
@@ -34,17 +41,13 @@ const AppHeader: FC<Iprops> = () => {
           <a className="logo sprite_01" href="/">
             网页云音乐
           </a>
-          <div className="title-list">
-            {headerTitles.map((item) => {
-              return (
-                <div className="item" key={item.title}>
-                  {showItem(item)}
-                </div>
-              )
-            })}
-          </div>
+          <div className="title-list">{TitleListArr}</div>
         </HeaderLeft>
-        <HeaderRight>headerright</HeaderRight>
+        <HeaderRight>
+          <span className="input">input</span>
+          <span className="center">创作者中心</span>
+          <span className="login">登录</span>
+        </HeaderRight>
       </div>
       <div className="divider"></div>
     </HeaderWrapper>
