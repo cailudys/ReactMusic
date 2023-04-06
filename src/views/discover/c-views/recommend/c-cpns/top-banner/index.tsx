@@ -1,5 +1,5 @@
-import React, { memo } from 'react'
-import type { FC, ReactNode } from 'react'
+import React, { memo, useRef } from 'react'
+import type { FC, ReactNode, ElementRef } from 'react'
 import { Carousel } from 'antd'
 
 import { BannerControl, BannerLeft, BannerRight, BannerWrapper } from './styled'
@@ -19,6 +19,9 @@ const contentStyle: React.CSSProperties = {
 }
 
 const TopBanner: FC<Iprops> = () => {
+  // 创建一个ref，传递给需要控制的组件
+  const bannerRef = useRef<ElementRef<typeof Carousel>>(null)
+
   // 从store中获取数据
   const { banners } = useAppSelector(
     (state) => ({
@@ -27,11 +30,19 @@ const TopBanner: FC<Iprops> = () => {
     shallEqualApp
   )
 
+  function handlePrevClick() {
+    bannerRef.current?.prev()
+  }
+
+  function handleNextClick() {
+    bannerRef.current?.next()
+  }
+
   return (
     <BannerWrapper>
       <div className="banner wrap-v2">
         <BannerLeft>
-          <Carousel autoplay>
+          <Carousel autoplay ref={bannerRef}>
             {banners.map((item) => {
               return (
                 <div key={item.url} className="banner-item">
@@ -47,8 +58,8 @@ const TopBanner: FC<Iprops> = () => {
         </BannerLeft>
         <BannerRight></BannerRight>
         <BannerControl>
-          <button className="btn left"></button>
-          <button className="btn right"></button>
+          <button className="btn left" onClick={handlePrevClick}></button>
+          <button className="btn right" onClick={handleNextClick}></button>
         </BannerControl>
       </div>
     </BannerWrapper>
