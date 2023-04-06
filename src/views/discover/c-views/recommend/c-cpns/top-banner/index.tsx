@@ -1,21 +1,13 @@
 import React, { memo, useRef, useState } from 'react'
 import type { FC, ReactNode, ElementRef } from 'react'
 import { Carousel } from 'antd'
+import classNames from 'classnames'
 
 import { BannerControl, BannerLeft, BannerRight, BannerWrapper } from './styled'
 import { shallEqualApp, useAppSelector } from '@/store'
 
 interface Iprops {
   children?: ReactNode
-}
-
-const contentStyle: React.CSSProperties = {
-  margin: 0,
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79'
 }
 
 const TopBanner: FC<Iprops> = () => {
@@ -59,8 +51,9 @@ const TopBanner: FC<Iprops> = () => {
       <div className="banner wrap-v2">
         <BannerLeft>
           <Carousel
-            effect="fade"
             autoplay
+            dots={false}
+            effect="fade"
             ref={bannerRef}
             afterChange={handleAfterChange}
           >
@@ -76,6 +69,19 @@ const TopBanner: FC<Iprops> = () => {
               )
             })}
           </Carousel>
+          <ul className="dots">
+            {banners.map((item, index) => {
+              return (
+                <li key={item.imageUrl}>
+                  <span
+                    className={classNames('item', {
+                      active: index === currentIndex
+                    })}
+                  ></span>
+                </li>
+              )
+            })}
+          </ul>
         </BannerLeft>
         <BannerRight></BannerRight>
         <BannerControl>
