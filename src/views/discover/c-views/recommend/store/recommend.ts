@@ -11,10 +11,9 @@ export const fetchBannerDatatAction = createAsyncThunk(
 )
 
 export const featchHotRecommendAction = createAsyncThunk(
-  'hotRecommend',
+  'hotRecommends',
   async (arg, { getState, dispatch }) => {
     const res = await getRecommend(8)
-    console.log('res', res)
     dispatch(changeHotRecommendAction(res.result))
   }
 )
@@ -37,7 +36,7 @@ const recommendSlice = createSlice({
       state.banners = payload
     },
     changeHotRecommendAction(state, { payload }) {
-      state.banners = payload
+      state.hotRecommends = payload
     }
   }
 })
