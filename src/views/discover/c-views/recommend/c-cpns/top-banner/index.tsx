@@ -40,8 +40,6 @@ const TopBanner: FC<Iprops> = () => {
     bgImageUrl = banners[currentIndex].imageUrl + '?imageView&blur=40x20'
   }
 
-  console.log('bgImageUrl', bgImageUrl)
-
   return (
     <BannerWrapper
       style={{
