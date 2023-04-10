@@ -37,6 +37,7 @@ const NewAlbum: FC<Iprops> = () => {
           <Carousel ref={CarouselRef} speed={900}>
             {[0, 1].map((item: any) => {
               return (
+                // 这一层的div 被antd自动添加了内联样式，内联样式很难覆盖掉。所以我们在它下面再写一个div，从而控制这个div来进行布局。
                 <div key={item}>
                   <div className="album-list">
                     {newAlbums.slice(item * 5, (item + 1) * 5).map((album) => {
