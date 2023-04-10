@@ -40,11 +40,11 @@ export const NewAlbumWapper = styled.div`
       overflow: hidden;
       flex: 1;
 
-      /* .album-list {
+      .album-list {
         display: flex;
         justify-content: space-between;
         align-items: center;
-      } */
+      }
     }
   }
 `

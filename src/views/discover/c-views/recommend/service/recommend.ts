@@ -14,3 +14,12 @@ export function getRecommend(limit = 30) {
     }
   })
 }
+
+export function getNewAlbum(limit = 10) {
+  return hyRequest.get({
+    url: '/album/newest',
+    params: {
+      limit
+    }
+  })
+}
