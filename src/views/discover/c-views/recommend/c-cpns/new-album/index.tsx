@@ -16,13 +16,13 @@ const NewAlbum: FC<Iprops> = () => {
       <div className="content">
         <button className="sprite_02 arrow arrow-left"></button>
         {/* 发现添加轮播图之后，导致整个页面的样式发生了变化，这时问什么？ */}
-        {/* <div className="banner">
+        <div className="banner">
           <Carousel>
             {[1, 2].map((item) => {
-              return <h1 key={item}>{item}</h1>
+              return <div key={item}>{item}</div>
             })}
           </Carousel>
-        </div> */}
+        </div>
         <button className="sprite_02 arrow arrow-right"></button>
       </div>
     </NewAlbumWapper>
