@@ -46,23 +46,36 @@ const AppPlayerBar: FC<Iprops> = () => {
               <span className="singer-name">梁博</span>
             </div>
             <div className="progress">
-              {/* Slider组件 */}
               <Slider
-                step={0.5}
-                // value={progress}
-                // tooltip={{ formatter: null }}
-                // onChange={handleSliderChanging}
-                // onAfterChange={handleSliderChanged}
+              // step={0.5}
+              // value={progress}
+              // tooltip={{ formatter: null }}
+              // onChange={handleSliderChanging}
+              // onAfterChange={handleSliderChanged}
               />
               <div className="time">
-                {/* <span className="current">{formatTime(currentTime)}</span>
+                <span className="current">00:52</span>
                 <span className="divider">/</span>
-                <span className="duration">{formatTime(duration)}</span> */}
+                <span className="duration">04:35</span>
               </div>
             </div>
           </div>
         </BarPlayerInfo>
-        <BarOperator>BarOperator</BarOperator>
+        <BarOperator>
+          <div className="left">
+            <button className="btn pip"></button>
+            <button className="btn sprite_playbar favor"></button>
+            <button className="btn sprite_playbar share"></button>
+          </div>
+          <div className="right sprite_playbar">
+            <button className="btn sprite_playbar volume"></button>
+            <button
+              className="btn sprite_playbar loop"
+              // onClick={handleChangePlayMode}
+            ></button>
+            <button className="btn sprite_playbar playlist"></button>
+          </div>
+        </BarOperator>
       </div>
     </PlayerBarWrapper>
   )
