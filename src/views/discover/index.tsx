@@ -7,7 +7,7 @@ interface Iprops {
   children?: ReactNode
 }
 
-const Discover: FC<Iprops> = () => {
+const Discover: FC<Iprops> = (props) => {
   return (
     <>
       <NavBar></NavBar>

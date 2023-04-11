@@ -5,8 +5,8 @@ interface Iprops {
   children?: ReactNode
 }
 
-const Template: FC<Iprops> = () => {
-  return <>Template</>
+const Player: FC<Iprops> = () => {
+  return <>Player</>
 }
 
-export default memo(Template)
+export default memo(Player)

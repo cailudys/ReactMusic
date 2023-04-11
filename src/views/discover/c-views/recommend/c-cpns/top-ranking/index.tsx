@@ -17,8 +17,6 @@ const TopRanking: FC<Iprops> = () => {
     shallowEqualApp
   )
 
-  console.log(rankings)
-
   return (
     <TopRankingWrapper>
       <AreaHeaderV1 title="榜单" moreLink="/disciver/ranking"></AreaHeaderV1>
