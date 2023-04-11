@@ -2,14 +2,14 @@ import React, { memo, useEffect, useState } from 'react'
 import type { FC, ReactNode } from 'react'
 import { useAppDispatch } from '@/store'
 import {
-  featchHotRecommendAction,
-  fetchBannerDatatAction,
-  fetchNewAlbumAction
+  fetchRecommendDataAction,
+  fetchRankingDataAction
 } from './store/recommend'
 import TopBanner from './c-cpns/top-banner'
 import { RecommendWrapper } from './style'
 import HotRecommend from './c-cpns/hot-recommend'
 import NewAlbum from './c-cpns/new-album'
+import TopRanking from './c-cpns/top-ranking'
 
 interface Iprops {
   children?: ReactNode
@@ -20,9 +20,8 @@ const Recommend: FC<Iprops> = () => {
 
   // 发起action获取数据
   useEffect(() => {
-    dispatch(fetchBannerDatatAction())
-    dispatch(featchHotRecommendAction())
-    dispatch(fetchNewAlbumAction())
+    dispatch(fetchRecommendDataAction())
+    dispatch(fetchRankingDataAction())
   }, [])
 
   return (
@@ -32,6 +31,7 @@ const Recommend: FC<Iprops> = () => {
         <div className="left">
           <HotRecommend></HotRecommend>
           <NewAlbum></NewAlbum>
+          <TopRanking></TopRanking>
         </div>
         <div className="right">right</div>
       </div>

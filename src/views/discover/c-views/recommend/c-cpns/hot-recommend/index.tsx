@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { HotRecoomendWrapper } from './style'
 import AreaHeaderV1 from '@/components/area-header-v1'
-import { shallEqualApp, useAppSelector } from '@/store'
+import { shallowEqualApp, useAppSelector } from '@/store'
 import SongMenuItem from '@/components/song-menu-item'
 
 interface Iprops {
@@ -14,7 +14,7 @@ const HotRecommend: FC<Iprops> = () => {
     (state) => ({
       hotRecommends: state.recommend.hotRecommends
     }),
-    shallEqualApp
+    shallowEqualApp
   )
 
   return (

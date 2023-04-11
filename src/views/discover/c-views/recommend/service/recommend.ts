@@ -23,3 +23,21 @@ export function getNewAlbum(limit = 10) {
     }
   })
 }
+
+export function getPlaylistDetail(id: number) {
+  return hyRequest.get({
+    url: '/playlist/detail',
+    params: {
+      id
+    }
+  })
+}
+
+export function getArtistList(limit = 30) {
+  return hyRequest.get({
+    url: '/artist/list',
+    params: {
+      limit
+    }
+  })
+}

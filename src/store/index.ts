@@ -22,6 +22,6 @@ type DispatchType = typeof store.dispatch
 
 export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector
 export const useAppDispatch: () => DispatchType = useDispatch
-export const shallEqualApp = shallowEqual
+export const shallowEqualApp = shallowEqual
 
 export default store

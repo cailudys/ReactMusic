@@ -4,7 +4,7 @@ import { Carousel } from 'antd'
 import classNames from 'classnames'
 
 import { BannerControl, BannerLeft, BannerRight, BannerWrapper } from './styled'
-import { shallEqualApp, useAppSelector } from '@/store'
+import { shallowEqualApp, useAppSelector } from '@/store'
 
 interface Iprops {
   children?: ReactNode
@@ -20,7 +20,7 @@ const TopBanner: FC<Iprops> = () => {
     (state) => ({
       banners: state.recommend.banners
     }),
-    shallEqualApp
+    shallowEqualApp
   )
 
   function handlePrevClick() {

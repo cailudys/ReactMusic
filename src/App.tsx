@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 
 import routes from './router'
-import { useAppSelector, useAppDispatch, shallEqualApp } from './store'
+import { useAppSelector, useAppDispatch, shallowEqualApp } from './store'
 import { changeMessage } from './store/modules/counter'
 import AppHeader from './components/app-header'
 import AppFooter from './components/app-footer'
