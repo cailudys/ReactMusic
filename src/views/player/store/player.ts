@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getSongDetail, getSongLyric } from '../service/player'
+import { ILyric, parseLyric } from '@/utils/parse-lyric'
 
 export const fetchCurrentSongAction = createAsyncThunk(
   'currentSong',
@@ -14,17 +15,25 @@ export const fetchCurrentSongAction = createAsyncThunk(
     })
     // 2.获取歌词数据
     getSongLyric(id).then((res) => {
-      console.log('歌词', res)
+      // 1.获取歌词的字符串
+      const lyricString = res.lrc.lyric
+
+      // 2. 对歌词进行解析
+      const lyrics = parseLyric(lyricString)
+      // 3.将歌词放到state中
+      dispatch(changeLyricsAction(lyrics))
     })
   }
 )
 
 interface IPlayerState {
   currentSong: any
+  lyrics: ILyric[]
 }
 
 const initialState: IPlayerState = {
-  currentSong: {}
+  currentSong: {},
+  lyrics: []
 }
 
 const playerSlice = createSlice({
@@ -33,9 +42,13 @@ const playerSlice = createSlice({
   reducers: {
     changeCurrentSongAction(state, { payload }) {
       state.currentSong = payload
+    },
+    changeLyricsAction(state, { payload }) {
+      state.lyrics = payload
     }
   }
 })
 
-export const { changeCurrentSongAction } = playerSlice.actions
+export const { changeCurrentSongAction, changeLyricsAction } =
+  playerSlice.actions
 export default playerSlice.reducer
