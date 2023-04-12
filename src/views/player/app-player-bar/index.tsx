@@ -22,6 +22,8 @@ const AppPlayerBar: FC<Iprops> = () => {
   /** 组件内部定义的数据 */
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
+  // 记录总时间
+  const [duration, setDuration] = useState(0)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   /** 从redux中获取数据 */
@@ -46,9 +48,18 @@ const AppPlayerBar: FC<Iprops> = () => {
         console.log('歌曲播放失败:', err)
       })
 
-    // // 2.获取音乐的总时长
-    // setDuration(currentSong.dt)
+    // 2.获取音乐的总时长
+    setDuration(currentSong.dt)
   }, [currentSong])
+
+  // 音乐播放的进度处理
+  function handleTimeUpdate() {
+    // 1. 可以通过<audio>实例的currentTime属性拿到当前时间
+    const currentTime = audioRef.current!.currentTime
+    // 2. 计算当前歌曲进度
+    const progress = ((currentTime * 1000) / duration) * 100
+    setProgress(progress)
+  }
 
   /** 组件内部的事件处理 */
   function handlePlayBtnClick() {
@@ -94,9 +105,9 @@ const AppPlayerBar: FC<Iprops> = () => {
             </div>
             <div className="progress">
               <Slider
-                // step={0.5}
+                step={0.3}
                 value={progress}
-                // tooltip={{ formatter: null }}
+                tooltip={{ formatter: null }}
                 // onChange={handleSliderChanging}
                 // onAfterChange={handleSliderChanged}
               />
@@ -126,7 +137,7 @@ const AppPlayerBar: FC<Iprops> = () => {
       </div>
       <audio
         ref={audioRef}
-        // onTimeUpdate={handleTimeUpdate}
+        onTimeUpdate={handleTimeUpdate}
         // onEnded={handleTimeEnded}
       />
     </PlayerBarWrapper>
