@@ -16,7 +16,7 @@ const TopBanner: FC<Iprops> = () => {
   const bannerRef = useRef<ElementRef<typeof Carousel>>(null)
 
   // 从store中获取数据
-  const { banners } = useAppSelector(
+  const { banners = [] } = useAppSelector(
     (state) => ({
       banners: state.recommend.banners
     }),

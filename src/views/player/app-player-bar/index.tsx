@@ -10,9 +10,10 @@ import {
   BarOperator
 } from './style'
 
-import { useAppDispatch, useAppSelector } from '@/store'
+import { shallowEqualApp, useAppDispatch, useAppSelector } from '@/store'
 import { formatTime, getImageSize } from '@/utils/format'
 import { getSongPlayUrl } from '@/utils/handle-player'
+import { changeLyricIndexAction, changeLyricsAction } from '../store/player'
 
 interface Iprops {
   children?: ReactNode
@@ -30,11 +31,16 @@ const AppPlayerBar: FC<Iprops> = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   /** 从redux中获取数据 */
-  const { currentSong } = useAppSelector((state) => ({
-    currentSong: state.player.currentSong
-  }))
+  const { currentSong, lyrics, lyricIndex } = useAppSelector(
+    (state) => ({
+      currentSong: state.player.currentSong,
+      lyrics: state.player.lyrics,
+      lyricIndex: state.player.lyricIndex
+    }),
+    shallowEqualApp
+  )
 
-  // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
   /** 组件内的副作用操作 */
   useEffect(() => {
@@ -87,11 +93,25 @@ const AppPlayerBar: FC<Iprops> = () => {
       setProgress(progress)
       setCurrentTiem(currentTime)
     }
+
+    // 3.根据当前的时间匹配歌词
+    let index = lyrics.length - 1
+    for (let i = 0; i < lyrics.length; i++) {
+      const lyric = lyrics[i]
+      if (lyric.time > currentTime) {
+        index = i - 1
+        break
+      }
+    }
+
+    // 4. 直接调用createSlice中的action来修改store中的状态
+    if (lyricIndex === index || index === -1) return
+    dispatch(changeLyricIndexAction(index))
+    console.log(lyrics[index]?.text)
   }
 
   /** 组件内部的事件处理 */
   function handlePlayBtnClick() {
-    console.log('33333333333', isPlaying)
     // 1.控制播放器的播放/暂停
     isPlaying
       ? audioRef.current?.pause()
