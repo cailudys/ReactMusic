@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import type { FC, ReactNode } from 'react'
-import { Slider } from 'antd'
+import { Slider, message } from 'antd'
 import { Link } from 'react-router-dom'
 
 import {
@@ -13,7 +13,7 @@ import {
 import { shallowEqualApp, useAppDispatch, useAppSelector } from '@/store'
 import { formatTime, getImageSize } from '@/utils/format'
 import { getSongPlayUrl } from '@/utils/handle-player'
-import { changeLyricIndexAction, changeLyricsAction } from '../store/player'
+import { changeLyricIndexAction } from '../store/player'
 
 interface Iprops {
   children?: ReactNode
@@ -93,7 +93,6 @@ const AppPlayerBar: FC<Iprops> = () => {
       setProgress(progress)
       setCurrentTiem(currentTime)
     }
-
     // 3.根据当前的时间匹配歌词
     let index = lyrics.length - 1
     for (let i = 0; i < lyrics.length; i++) {
@@ -103,11 +102,15 @@ const AppPlayerBar: FC<Iprops> = () => {
         break
       }
     }
-
     // 4. 直接调用createSlice中的action来修改store中的状态
     if (lyricIndex === index || index === -1) return
     dispatch(changeLyricIndexAction(index))
-    console.log(lyrics[index]?.text)
+    // 5. 展示歌词
+    message.open({
+      key: 'lyirc',
+      content: lyrics[index]?.text,
+      duration: 0
+    })
   }
 
   /** 组件内部的事件处理 */
