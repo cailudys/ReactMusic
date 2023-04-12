@@ -107,6 +107,7 @@ export const BarPlayerInfo = styled.div`
           border: none;
           margin-top: -7px;
           background: url(${require('@/assets/img/sprite_icon.png')}) 0 -250px;
+          transform: translate(-50%, 10%);
           ::before {
             display: none;
           }
