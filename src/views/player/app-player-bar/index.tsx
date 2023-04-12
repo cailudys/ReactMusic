@@ -11,7 +11,7 @@ import {
 } from './style'
 
 import { useAppDispatch, useAppSelector } from '@/store'
-import { getImageSize } from '@/utils/format'
+import { formatTime, getImageSize } from '@/utils/format'
 import { getSongPlayUrl } from '@/utils/handle-player'
 
 interface Iprops {
@@ -24,6 +24,7 @@ const AppPlayerBar: FC<Iprops> = () => {
   const [progress, setProgress] = useState(0)
   // 记录总时间
   const [duration, setDuration] = useState(0)
+  const [currentTiem, setCurrentTiem] = useState(0)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   /** 从redux中获取数据 */
@@ -37,16 +38,16 @@ const AppPlayerBar: FC<Iprops> = () => {
   useEffect(() => {
     // 1.播放音乐
     audioRef.current!.src = getSongPlayUrl(33894312)
-    audioRef.current
-      ?.play()
-      .then(() => {
-        setIsPlaying(true)
-        console.log('歌曲播放成功')
-      })
-      .catch((err) => {
-        setIsPlaying(false)
-        console.log('歌曲播放失败:', err)
-      })
+    // audioRef.current
+    //   ?.play()
+    //   .then(() => {
+    //     setIsPlaying(true)
+    //     console.log('歌曲播放成功')
+    //   })
+    //   .catch((err) => {
+    //     setIsPlaying(false)
+    //     console.log('歌曲播放失败:', err)
+    //   })
 
     // 2.获取音乐的总时长
     setDuration(currentSong.dt)
@@ -55,9 +56,10 @@ const AppPlayerBar: FC<Iprops> = () => {
   // 音乐播放的进度处理
   function handleTimeUpdate() {
     // 1. 可以通过<audio>实例的currentTime属性拿到当前时间
-    const currentTime = audioRef.current!.currentTime
+    const currentTime = audioRef.current!.currentTime * 1000
+    setCurrentTiem(currentTime)
     // 2. 计算当前歌曲进度
-    const progress = ((currentTime * 1000) / duration) * 100
+    const progress = (currentTime / duration) * 100
     setProgress(progress)
   }
 
@@ -112,9 +114,9 @@ const AppPlayerBar: FC<Iprops> = () => {
                 // onAfterChange={handleSliderChanged}
               />
               <div className="time">
-                <span className="current">00:52</span>
+                <span className="current">{formatTime(currentTiem)}</span>
                 <span className="divider">/</span>
-                <span className="duration">04:35</span>
+                <span className="duration">{formatTime(duration)}</span>
               </div>
             </div>
           </div>
