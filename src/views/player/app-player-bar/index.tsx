@@ -25,6 +25,8 @@ const AppPlayerBar: FC<Iprops> = () => {
   // 记录总时间
   const [duration, setDuration] = useState(0)
   const [currentTiem, setCurrentTiem] = useState(0)
+  // 记录是否在拖拽
+  const [isSliding, setIsSliding] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   /** 从redux中获取数据 */
@@ -53,14 +55,38 @@ const AppPlayerBar: FC<Iprops> = () => {
     setDuration(currentSong.dt)
   }, [currentSong])
 
+  function handleSliderChanging(value: number) {
+    // 1.记录拖拽状态
+    setIsSliding(true)
+    // 2. 设置progress
+    setProgress(value)
+    // 3.获取value对应的时间
+    const currentTiem = (value / 100) * duration
+    setCurrentTiem(currentTiem)
+  }
+
+  // 进度条改变了的时候会被调用（拖拽进度条松开鼠标的时候也会执行一下）
+  function handleSliderChanged(value: number) {
+    // 1.获取点击位置的时间
+    const currentTime = (value / 100) * duration
+    // 2.设置当前播放的时间
+    audioRef.current!.currentTime = currentTime / 1000
+    // 手动设置一下进度使其立即更新
+    setCurrentTiem(currentTime)
+    setProgress(value)
+    setIsSliding(false)
+  }
+
   // 音乐播放的进度处理
   function handleTimeUpdate() {
     // 1. 可以通过<audio>实例的currentTime属性拿到当前时间
     const currentTime = audioRef.current!.currentTime * 1000
-    setCurrentTiem(currentTime)
     // 2. 计算当前歌曲进度
-    const progress = (currentTime / duration) * 100
-    setProgress(progress)
+    if (!isSliding) {
+      const progress = (currentTime / duration) * 100
+      setProgress(progress)
+      setCurrentTiem(currentTime)
+    }
   }
 
   /** 组件内部的事件处理 */
@@ -110,8 +136,8 @@ const AppPlayerBar: FC<Iprops> = () => {
                 step={0.3}
                 value={progress}
                 tooltip={{ formatter: null }}
-                // onChange={handleSliderChanging}
-                // onAfterChange={handleSliderChanged}
+                onChange={handleSliderChanging}
+                onAfterChange={handleSliderChanged}
               />
               <div className="time">
                 <span className="current">{formatTime(currentTiem)}</span>
