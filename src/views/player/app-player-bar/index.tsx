@@ -9,12 +9,18 @@ import {
   BarPlayerInfo,
   BarOperator
 } from './style'
+import { useAppSelector } from '@/store'
+import { getImageSize } from '@/utils/format'
 
 interface Iprops {
   children?: ReactNode
 }
 
 const AppPlayerBar: FC<Iprops> = () => {
+  const { currentSong } = useAppSelector((state) => ({
+    currentSong: state.player.currentSong
+  }))
+
   return (
     <PlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
@@ -36,22 +42,22 @@ const AppPlayerBar: FC<Iprops> = () => {
           <Link to="/player">
             <img
               className="image"
-              src="https://p2.music.126.net/bkBg46eD1bS9D2mzxnKAnQ==/3395291910036707.jsp?param=34y34"
+              src={getImageSize(currentSong?.al?.picUrl, 50)}
               alt=""
             />
           </Link>
           <div className="info">
             <div className="song">
-              <span className="song-name">日落大道</span>
-              <span className="singer-name">梁博</span>
+              <span className="song-name">{currentSong?.name}</span>
+              <span className="singer-name">{currentSong?.ar[0].name}</span>
             </div>
             <div className="progress">
               <Slider
-              // step={0.5}
-              // value={progress}
-              // tooltip={{ formatter: null }}
-              // onChange={handleSliderChanging}
-              // onAfterChange={handleSliderChanged}
+                // step={0.5}
+                value={progress}
+                // tooltip={{ formatter: null }}
+                // onChange={handleSliderChanging}
+                // onAfterChange={handleSliderChanged}
               />
               <div className="time">
                 <span className="current">00:52</span>

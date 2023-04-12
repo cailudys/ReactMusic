@@ -8,11 +8,13 @@ import {
 
 import counterReducer from './modules/counter'
 import recommendReducer from '@/views/discover/c-views/recommend/store/recommend'
+import PlayerReducer from '@/views/player/store/player'
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
-    recommend: recommendReducer
+    recommend: recommendReducer,
+    player: PlayerReducer
   }
 })
 
