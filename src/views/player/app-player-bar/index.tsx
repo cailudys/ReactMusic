@@ -39,17 +39,17 @@ const AppPlayerBar: FC<Iprops> = () => {
   /** 组件内的副作用操作 */
   useEffect(() => {
     // 1.播放音乐
-    audioRef.current!.src = getSongPlayUrl(33894312)
-    // audioRef.current
-    //   ?.play()
-    //   .then(() => {
-    //     setIsPlaying(true)
-    //     console.log('歌曲播放成功')
-    //   })
-    //   .catch((err) => {
-    //     setIsPlaying(false)
-    //     console.log('歌曲播放失败:', err)
-    //   })
+    audioRef.current!.src = getSongPlayUrl(currentSong.id)
+    audioRef.current
+      ?.play()
+      .then(() => {
+        setIsPlaying(true)
+        console.log('歌曲播放成功')
+      })
+      .catch((err) => {
+        setIsPlaying(false)
+        console.log('歌曲播放失败:', err)
+      })
 
     // 2.获取音乐的总时长
     setDuration(currentSong.dt)
@@ -129,7 +129,7 @@ const AppPlayerBar: FC<Iprops> = () => {
           <div className="info">
             <div className="song">
               <span className="song-name">{currentSong?.name}</span>
-              <span className="singer-name">{currentSong?.ar[0].name}</span>
+              <span className="singer-name">{currentSong?.ar?.[0]?.name}</span>
             </div>
             <div className="progress">
               <Slider
