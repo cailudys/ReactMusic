@@ -46,16 +46,16 @@ const AppPlayerBar: FC<Iprops> = () => {
   useEffect(() => {
     // 1.播放音乐
     audioRef.current!.src = getSongPlayUrl(currentSong.id)
-    audioRef.current
-      ?.play()
-      .then(() => {
-        setIsPlaying(true)
-        console.log('歌曲播放成功')
-      })
-      .catch((err) => {
-        setIsPlaying(false)
-        console.log('歌曲播放失败:', err)
-      })
+    // audioRef.current
+    //   ?.play()
+    //   .then(() => {
+    //     setIsPlaying(true)
+    //     console.log('歌曲播放成功')
+    //   })
+    //   .catch((err) => {
+    //     setIsPlaying(false)
+    //     console.log('歌曲播放失败:', err)
+    //   })
 
     // 2.获取音乐的总时长
     setDuration(currentSong.dt)
