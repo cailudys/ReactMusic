@@ -13,7 +13,11 @@ import {
 import { shallowEqualApp, useAppDispatch, useAppSelector } from '@/store'
 import { formatTime, getImageSize } from '@/utils/format'
 import { getSongPlayUrl } from '@/utils/handle-player'
-import { changeLyricIndexAction, changePlayModeAction } from '../store/player'
+import {
+  changeLyricIndexAction,
+  changeMusicAction,
+  changePlayModeAction
+} from '../store/player'
 
 interface Iprops {
   children?: ReactNode
@@ -47,20 +51,36 @@ const AppPlayerBar: FC<Iprops> = () => {
   useEffect(() => {
     // 1.播放音乐
     audioRef.current!.src = getSongPlayUrl(currentSong.id)
-    // audioRef.current
-    //   ?.play()
-    //   .then(() => {
-    //     setIsPlaying(true)
-    //     console.log('歌曲播放成功')
-    //   })
-    //   .catch((err) => {
-    //     setIsPlaying(false)
-    //     console.log('歌曲播放失败:', err)
-    //   })
+    audioRef.current
+      ?.play()
+      .then(() => {
+        setIsPlaying(true)
+        console.log('歌曲播放成功')
+      })
+      .catch((err) => {
+        setIsPlaying(false)
+        console.log('歌曲播放失败:', err)
+      })
 
     // 2.获取音乐的总时长
     setDuration(currentSong.dt)
   }, [currentSong])
+
+  //
+  function handleChangeMusic(isNext = true) {
+    dispatch(changeMusicAction(isNext))
+  }
+
+  /** 播放按钮 */
+  function handlePlayBtnClick() {
+    // 1.控制播放器的播放/暂停
+    isPlaying
+      ? audioRef.current?.pause()
+      : audioRef.current?.play().catch(() => setIsPlaying(false))
+
+    // 2.改变isPlaying的状态
+    setIsPlaying(!isPlaying)
+  }
 
   function handleSliderChanging(value: number) {
     // 1.记录拖拽状态
@@ -120,24 +140,15 @@ const AppPlayerBar: FC<Iprops> = () => {
     })
   }
 
-  /** 组件内部的事件处理 */
-  function handlePlayBtnClick() {
-    // 1.控制播放器的播放/暂停
-    isPlaying
-      ? audioRef.current?.pause()
-      : audioRef.current?.play().catch(() => setIsPlaying(false))
-
-    // 2.改变isPlaying的状态
-    setIsPlaying(!isPlaying)
-  }
-
   return (
     <PlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
         <BarControl isPlaying={isPlaying}>
           <button
             className="btn sprite_playbar prev"
-            onClick={() => null}
+            onClick={() => {
+              handleChangeMusic(false)
+            }}
           ></button>
           <button
             className="btn sprite_playbar play"
@@ -145,7 +156,9 @@ const AppPlayerBar: FC<Iprops> = () => {
           ></button>
           <button
             className="btn sprite_playbar next"
-            onClick={() => null}
+            onClick={() => {
+              handleChangeMusic()
+            }}
           ></button>
         </BarControl>
         <BarPlayerInfo>

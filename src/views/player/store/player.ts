@@ -3,10 +3,14 @@ import { getSongDetail, getSongLyric } from '../service/player'
 import { ILyric, parseLyric } from '@/utils/parse-lyric'
 import { IRootState } from '@/store'
 
+interface IThunkState {
+  state: IRootState
+}
+
 export const fetchCurrentSongAction = createAsyncThunk<
   void,
   number,
-  { state: IRootState }
+  IThunkState
 >(
   'currentSong',
   // 获取歌曲数据
@@ -43,6 +47,34 @@ export const fetchCurrentSongAction = createAsyncThunk<
       // 3.将歌词放到state中
       dispatch(changeLyricsAction(lyrics))
     })
+  }
+)
+
+export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>(
+  'changeMusic',
+  (isNext, { dispatch, getState }) => {
+    // 1. 获取state中的模式
+    const player = getState().player
+    const playMode = player.playMode
+    const songIndex = player.playSongIndex
+    const songList = player.playSongList
+
+    // 2. 根据不同的模式计算下一首歌曲的index
+    let newIndex = songIndex
+    if (playMode === 1) {
+      //随机播放
+      newIndex = Math.floor(Math.random() * songList.length)
+    } else {
+      // 单曲循环和顺序播放
+      newIndex = isNext ? songIndex + 1 : songIndex - 1
+      if (newIndex > songList.length - 1) newIndex = 0
+      if (newIndex < 0) newIndex = songList.length - 1
+    }
+
+    //3.获取当前的歌曲
+    const song = songList[newIndex]
+    dispatch(changeCurrentSongAction(song))
+    dispatch(changePlaySongIndexAction(newIndex))
   }
 )
 
