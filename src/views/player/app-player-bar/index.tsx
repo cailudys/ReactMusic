@@ -66,7 +66,7 @@ const AppPlayerBar: FC<Iprops> = () => {
     setDuration(currentSong.dt)
   }, [currentSong])
 
-  //
+  // 切换音乐
   function handleChangeMusic(isNext = true) {
     dispatch(changeMusicAction(isNext))
   }
@@ -90,6 +90,15 @@ const AppPlayerBar: FC<Iprops> = () => {
     // 3.获取value对应的时间
     const currentTiem = (value / 100) * duration
     setCurrentTiem(currentTiem)
+  }
+
+  function handleTimeEnded() {
+    if (playMode === 2) {
+      audioRef.current!.currentTime = 0
+      audioRef.current?.play()
+    } else {
+      handleChangeMusic(true)
+    }
   }
 
   // 进度条改变了的时候会被调用（拖拽进度条松开鼠标的时候也会执行一下）
@@ -209,7 +218,7 @@ const AppPlayerBar: FC<Iprops> = () => {
       <audio
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
-        // onEnded={handleTimeEnded}
+        onEnded={handleTimeEnded}
       />
     </PlayerBarWrapper>
   )

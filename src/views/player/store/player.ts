@@ -75,6 +75,13 @@ export const changeMusicAction = createAsyncThunk<void, boolean, IThunkState>(
     const song = songList[newIndex]
     dispatch(changeCurrentSongAction(song))
     dispatch(changePlaySongIndexAction(newIndex))
+
+    //4.切换歌词
+    getSongLyric(song.id).then((res) => {
+      const lyricString = res.lrc.lyric
+      const lyrics = parseLyric(lyricString)
+      dispatch(changeLyricsAction(lyrics))
+    })
   }
 )
 

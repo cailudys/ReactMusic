@@ -11,6 +11,7 @@ import { fetchCurrentSongAction } from './views/player/store/player'
 function App() {
   // 获取某一首歌
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(fetchCurrentSongAction(2037945324))
   })
