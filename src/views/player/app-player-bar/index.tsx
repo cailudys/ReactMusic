@@ -13,7 +13,7 @@ import {
 import { shallowEqualApp, useAppDispatch, useAppSelector } from '@/store'
 import { formatTime, getImageSize } from '@/utils/format'
 import { getSongPlayUrl } from '@/utils/handle-player'
-import { changeLyricIndexAction } from '../store/player'
+import { changeLyricIndexAction, changePlayModeAction } from '../store/player'
 
 interface Iprops {
   children?: ReactNode
@@ -31,11 +31,12 @@ const AppPlayerBar: FC<Iprops> = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   /** 从redux中获取数据 */
-  const { currentSong, lyrics, lyricIndex } = useAppSelector(
+  const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(
     (state) => ({
       currentSong: state.player.currentSong,
       lyrics: state.player.lyrics,
-      lyricIndex: state.player.lyricIndex
+      lyricIndex: state.player.lyricIndex,
+      playMode: state.player.playMode
     }),
     shallowEqualApp
   )
@@ -81,6 +82,12 @@ const AppPlayerBar: FC<Iprops> = () => {
     setCurrentTiem(currentTime)
     setProgress(value)
     setIsSliding(false)
+  }
+
+  function handleChangePlayMode() {
+    let newPlayMode = playMode + 1
+    if (newPlayMode > 2) newPlayMode = 0
+    dispatch(changePlayModeAction(newPlayMode))
   }
 
   // 音乐播放的进度处理
@@ -170,7 +177,7 @@ const AppPlayerBar: FC<Iprops> = () => {
             </div>
           </div>
         </BarPlayerInfo>
-        <BarOperator>
+        <BarOperator playMode={playMode}>
           <div className="left">
             <button className="btn pip"></button>
             <button className="btn sprite_playbar favor"></button>
@@ -180,7 +187,7 @@ const AppPlayerBar: FC<Iprops> = () => {
             <button className="btn sprite_playbar volume"></button>
             <button
               className="btn sprite_playbar loop"
-              // onClick={handleChangePlayMode}
+              onClick={handleChangePlayMode}
             ></button>
             <button className="btn sprite_playbar playlist"></button>
           </div>

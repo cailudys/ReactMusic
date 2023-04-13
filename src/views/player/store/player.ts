@@ -52,6 +52,7 @@ interface IPlayerState {
   lyricIndex: number
   playSongList: any[]
   playSongIndex: number
+  playMode: number
 }
 
 const initialState: IPlayerState = {
@@ -59,7 +60,8 @@ const initialState: IPlayerState = {
   lyrics: [],
   lyricIndex: -1,
   playSongList: [],
-  playSongIndex: -1
+  playSongIndex: -1,
+  playMode: 0 // 0:顺序播放 1：随机播放 2：单曲循环
 }
 
 const playerSlice = createSlice({
@@ -80,6 +82,9 @@ const playerSlice = createSlice({
     },
     changePlaySongIndexAction(state, { payload }) {
       state.playSongIndex = payload
+    },
+    changePlayModeAction(state, { payload }) {
+      state.playMode = payload
     }
   }
 })
@@ -89,6 +94,7 @@ export const {
   changeLyricsAction,
   changeLyricIndexAction,
   changePlaySongListAction,
-  changePlaySongIndexAction
+  changePlaySongIndexAction,
+  changePlayModeAction
 } = playerSlice.actions
 export default playerSlice.reducer
